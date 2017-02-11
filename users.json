@@ -1,0 +1,22 @@
+{
+  "value": [
+    {
+      "name": "ryota",
+      "age": 22,
+      "id": "1",
+      "skill": {
+        "name": "fire",
+        "level": 10
+      }
+    },
+    {
+      "name": "suzuki",
+      "age": 12,
+      "id": "2",
+      "skill": {
+        "name": "ice",
+        "level": 10
+      }
+    }
+  ]
+}

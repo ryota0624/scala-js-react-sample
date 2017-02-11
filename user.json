@@ -1,0 +1,9 @@
+{
+  "name": "ryota",
+  "age": 22,
+  "id": "1",
+  "skill": {
+    "name": "fire",
+    "level": 10
+  }
+}
