@@ -1,6 +1,7 @@
 package application
 
 import org.scalajs.dom
+import org.scalajs.dom.raw.FormData
 
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
@@ -23,7 +24,7 @@ object Request {
     JSON.parse(result.responseText).asInstanceOf[T]
   })
 
-  def postFormData[T](url: String, data: Map[String, Any]) = dom.ext.Ajax.post(url = url, data = map2String(data), headers = formDataheaders)
+  def postFormData[T](url: String, data: Map[String, Any]) = dom.ext.Ajax.post(url = url, data = map2FormData(data), headers = formDataheaders)
     .map({ result =>
       JSON.parse(result.responseText).asInstanceOf[T]
     })
@@ -47,6 +48,18 @@ object Request {
     }
 
     filterdValue.reduce(_ + "&" + _)
+  }
+
+  private def map2FormData(data: Map[String, Any]): FormData = {
+    val form = new FormData()
+    data.foreach { case (key, value) =>
+      value match {
+        case str: String => form.append(key, str)
+        case num: Int => form.append(key, num)
+        case _ => None
+      }
+    }
+    form
   }
 
 

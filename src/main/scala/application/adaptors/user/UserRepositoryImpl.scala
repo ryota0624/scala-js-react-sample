@@ -21,7 +21,7 @@ object UserRepositoryImpl extends UserRepository {
   }
 
   def store(user: User): Future[Either[String, User]] = {
-    Request.postFormData[UserDto]("/user.json", userToFormData(user) ).map({ userDto =>
+    Request.postFormData[UserDto]("/user.json", userToFormData(user)).map({ userDto =>
       Right(userDto2Model(userDto))
     })
   }
@@ -36,28 +36,33 @@ object UserRepositoryImpl extends UserRepository {
 
   private def skillDto2Model(dto: SkillDto) = Skill(dto.name, dto.level)
 
+
+  @js.native
+  trait UserDto extends js.Object {
+    val name: String = js.native
+    val age: Int = js.native
+    val id: String = js.native
+    val skill: SkillDto = js.native
+
+  }
+
+
+  @js.native
+  trait SkillDto extends js.Object {
+    val name: String = js.native
+    val level: Int = js.native
+
+  }
+
+
+  @js.native
+  trait UsersResponse extends js.Object {
+    val value: js.Array[UserDto] = js.native
+  }
+
 }
 
-
-@js.native
-trait UserDto extends js.Object {
-  val name: String = js.native
-  val age: Int = js.native
-  val id: String = js.native
-  val skill: SkillDto = js.native
-
+trait UserRepositoryImplComponent {
+  val userRepository = UserRepositoryImpl
 }
 
-
-@js.native
-trait SkillDto extends js.Object {
-  val name: String = js.native
-  val level: Int = js.native
-
-}
-
-
-@js.native
-trait UsersResponse extends js.Object {
-  val value: js.Array[UserDto] = js.native
-}
